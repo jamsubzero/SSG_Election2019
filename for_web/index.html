@@ -14,10 +14,6 @@
 	</head>
 
 	<body>
-		<div ng-controller="Result">
-			<p>You are in {{disp.weather}}</p>
-		</div>
-
 		<div class="card" style="width: 20rem;">
 			<div class="card-body">
 			  <h4 class="card-title">President</h4>
@@ -30,22 +26,13 @@
 						<th>Votes</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
+				<tbody ng-controller="Result">
+					<tr ng-repeat="f in pres">
 						<td class="text-center">1</td>
-						<td>Andrew Mike</td>
-						<td>12</td>
+						<td>{{f.name}}</td>
+						<td>{{f.score}}</td>
 					</tr>
-					<tr>
-						<td class="text-center">2</td>
-						<td>John Doe</td>
-						<td>13</td>
-					</tr>
-					<tr>
-						<td class="text-center">3</td>
-						<td>Alex Mike</td>
-						<td>35</td>
-					</tr>
+					
 				</tbody>
 			</table>
 			  
