@@ -4,13 +4,52 @@
         <title>Hello AngularJS</title>
         
 		<script src="assets/js/angular.min.js"></script>
-        <script src="assets/js/result.js"></script> 
+		<script src="assets/js/result.js"></script> 
+		
+		  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+		  <link href="assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+		  <link href="assets/css/now-ui-dashboard.css" rel="stylesheet" />
+
         
 	</head>
 
 	<body>
 		<div ng-controller="Result">
-			<p>You are in {{disp.weather.id[0]}}</p>
+			<p>You are in {{disp.weather}}</p>
+		</div>
+
+		<div class="card" style="width: 20rem;">
+			<div class="card-body">
+			  <h4 class="card-title">President</h4>
+
+			  <table class="table">
+				<thead>
+					<tr>
+						<th class="text-center">#</th>
+						<th>Name</th>
+						<th>Votes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center">1</td>
+						<td>Andrew Mike</td>
+						<td>12</td>
+					</tr>
+					<tr>
+						<td class="text-center">2</td>
+						<td>John Doe</td>
+						<td>13</td>
+					</tr>
+					<tr>
+						<td class="text-center">3</td>
+						<td>Alex Mike</td>
+						<td>35</td>
+					</tr>
+				</tbody>
+			</table>
+			  
+			</div>
 		</div>
 	</body>
 </html>
