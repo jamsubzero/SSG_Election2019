@@ -4,7 +4,11 @@
         <title>Hello AngularJS</title>
         
 		<script src="assets/js/angular.min.js"></script>
-		<script src="assets/js/result.js"></script> 
+		<script src="assets/js/result.js"></script>
+		<script src="assets/js/core/bootstrap.min.js"></script>
+		<script src="assets/js/core/jquery.min.js"></script>
+		<script src="assets/js/core/popper.min.js"></script>
+		
 		
 		  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 		  <link href="assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
@@ -14,29 +18,84 @@
 	</head>
 
 	<body>
-		<div class="card" style="width: 20rem;">
-			<div class="card-body">
-			  <h4 class="card-title">President</h4>
 
-			  <table class="table">
-				<thead>
-					<tr>
-						<th class="text-center">#</th>
-						<th>Name</th>
-						<th>Votes</th>
-					</tr>
-				</thead>
-				<tbody ng-controller="Result">
-					<tr ng-repeat="f in pres">
-						<td class="text-center">1</td>
-						<td>{{f.name}}</td>
-						<td>{{f.score}}</td>
-					</tr>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+				<div class="card">
+						<div class="card-body">
+								<h4 class="card-title">President</h4>
+		
+								<table class="table">
+								<thead>
+									<tr>
+										<th class="text-center">#</th>
+										<th>Name</th>
+										<th>Votes</th>
+									</tr>
+								</thead>
+								<tbody ng-controller="Result">
+									<tr ng-repeat="p in pres">
+										<td class="text-center">{{$index + 1}}</td>
+										<td>{{p.name}}</td>
+										<td>{{p.score}}</td>
+									</tr>
+									
+								</tbody>
+							</table>		
+						</div>
+					</div>
+    </div>
+    <div class="col-sm">
+				<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">Vice President</h4>
+							<table class="table">
+							<thead>
+								<tr>
+									<th class="text-center">#</th>
+									<th>Name</th>
+									<th>Votes</th>
+								</tr>
+							</thead>
+							<tbody ng-controller="Result">
+								<tr ng-repeat="vp in vpres">
+									<td class="text-center">{{$index + 1}}</td>
+									<td>{{vp.name}}</td>
+									<td>{{vp.score}}</td>
+								</tr>			
+							</tbody>
+						</table>		
+						</div>
+					 </div>
+    </div>
+    <div class="col-sm">
+				<div class="card">
+								<div class="card-body">
+									<h4 class="card-title">Senator</h4>
 					
-				</tbody>
-			</table>
-			  
-			</div>
-		</div>
+									<table class="table">
+									<thead>
+										<tr>
+											<th class="text-center">#</th>
+											<th>Name</th>
+											<th>Votes</th>
+										</tr>
+									</thead>
+									<tbody ng-controller="Result">
+										<tr ng-repeat="s in sen">
+											<td class="text-center">{{$index + 1}}</td>
+											<td>{{s.name}}</td>
+											<td>{{s.score}}</td>
+										</tr>
+									</tbody>
+								</table>
+					</div>
+				</div>
+    </div>
+  </div>
+</div>
+
+
 	</body>
 </html>
