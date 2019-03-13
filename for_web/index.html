@@ -1,17 +1,16 @@
 <!doctype html>
-<html ng-app="demo">
+<html ng-app="vote">
 	<head>
         <title>Hello AngularJS</title>
         
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-        <script src="assets/js/"></script> 
+        <script src="assets/js/result.js"></script> 
         
 	</head>
 
 	<body>
-		<div ng-controller="Hello">
-			<p>The ID is {{greeting.id}}</p>
-			<p>The content is {{greeting.content}}</p>
+		<div ng-controller="Result">
+			<p>You are in {{disp.weather.id[0]}}</p>
 		</div>
 	</body>
 </html>
