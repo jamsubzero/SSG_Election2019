@@ -1,0 +1,238 @@
+<!doctype html>
+<html ng-app="vote">
+
+<head>
+    <title>Hello AngularJS</title>
+
+    <script src="../assets/js/angular.min.js"></script>
+    <script src="../assets/js/result.js"></script>
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+    <link href="../assets/css/now-ui-dashboard.css" rel="stylesheet" />
+    <link href="../assets/css/mystyle.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div id="ssgtitle">
+        <h1>SSG ELECTION 2019 RESULT</h1>
+    </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="15000">
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="divpad1px col-md-7">
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">President</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="p in pres" id="{{'row' + ($index+1)}}" class="pres">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{p.name}}</td>
+                                                    <td id="td1px">{{p.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Vice President</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="vp in vpres" class="vpres">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{vp.name}}</td>
+                                                    <td id="td1px">{{vp.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divpad1px col-md-5">
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Senator</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="s in sen" class="sen">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{s.name}}</td>
+                                                    <td id="td1px">{{s.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container-fluid">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">IT Representative</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="it in itrep" class="reps">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{it.name}}</td>
+                                                    <td id="td1px">{{it.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">ED Representative</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="ed in edrep" class="reps">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{ed.name}}</td>
+                                                    <td id="td1px">{{ed.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">BA Representative</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="ba in barep" class="reps">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{ba.name}}</td>
+                                                    <td id="td1px">{{ba.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">FI Representative</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="fi in firep" class="reps">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{fi.name}}</td>
+                                                    <td id="td1px">{{fi.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="card" id="cardmargin">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Crim Representative</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Name</th>
+                                                    <th>Votes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-controller="Result">
+                                                <tr ng-repeat="cr in crrep" class="reps">
+                                                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                                    <td id="td1px">{{cr.name}}</td>
+                                                    <td id="td1px">{{cr.score}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"></a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"></a>
+        </div>
+
+</body>
+
+</html>
