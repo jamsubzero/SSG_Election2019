@@ -34,7 +34,9 @@ public class VoteMain extends javax.swing.JFrame {
     final String POS_SENATE = "sen";
 
  final private int SENATORS_ID_MIN = 3;
- final private int SENATORS_ID_MAX = 14;    
+ final private int SENATORS_ID_MAX = 12;    
+ 
+ final private String CHANGE_PASS = "banesgwapo14344";
 
 
  
@@ -59,8 +61,8 @@ public class VoteMain extends javax.swing.JFrame {
      */
     // BSIT
    
-   String conURL = "jdbc:mysql://localhost:3307/SSG?"
-         + "user=root&password=";
+   String conURL = "jdbc:mysql://localhost/SSG?"
+         + "user=root&password=jamsubzero";
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -84,6 +86,7 @@ public class VoteMain extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         curTerminal = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
@@ -240,6 +243,13 @@ public class VoteMain extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Terminal:");
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -255,6 +265,8 @@ public class VoteMain extends javax.swing.JFrame {
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(curTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,8 +286,10 @@ public class VoteMain extends javax.swing.JFrame {
                                 .addComponent(jButton7)
                                 .addComponent(curTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel21))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -714,7 +728,7 @@ JOptionPane.showMessageDialog(rootPane, "No candidate selected\nNo ballot casted
  int ans = JOptionPane.showConfirmDialog(rootPane, "Sure to cast ballot?", "Ballot Casting Confirmation", JOptionPane.YES_NO_OPTION);
          if(ans==JOptionPane.YES_OPTION){
         try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -723,31 +737,41 @@ Statement stmt = con.createStatement();
 String terminal = getTerminal();
 int nextBallot = getCurrentBallot(terminal)+1;
 
-if(!getPresident().equals("-1")){ // -1 one means no vote
-    System.out.println("pres: "+ getPresident());
+if(!getPresidentID().equals("-1")){ // -1 one means no vote
+    String presID = getPresidentID();
+    System.out.println("pres: "+ presID);
     System.out.println("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+getPresident()+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+        + " VALUES ('"+presID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
 stmt.executeUpdate("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+getPresident()+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+        + " VALUES ('"+presID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+//UPDATE `ssg`.`candidate` SET `curScore`='1' WHERE  `canID`=1;
+stmt.executeUpdate("UPDATE `candidate` SET `curScore`=`curScore` + 1 WHERE  `canID`='"+presID+"';");
+
 }
 if(!getVP().equals("-1")){ // -1 one means no vote
-     System.out.println("vp: "+ getVP());
+    String VpID = getVP();
+     System.out.println("vp: "+ VpID);
      System.out.println("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+getVP()+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+        + " VALUES ('"+VpID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
 stmt.executeUpdate("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+getVP()+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+        + " VALUES ('"+VpID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+stmt.executeUpdate("UPDATE `candidate` SET `curScore`=`curScore` + 1 WHERE  `canID`='"+VpID+"';");
+
 }
 //=================SENATE=============================
 String[] senates = getSenate();
-for(String curSen: senates){
-            System.out.println("SELSENATE 2:" + curSen);
-                if(curSen!=null){
-        System.out.println("Senate: "+curSen);
+for(String curSenID: senates){
+            System.out.println("SELSENATE 2:" + curSenID);
+       if(curSenID!=null){
+        System.out.println("Senate: "+curSenID);
          System.out.println("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+curSen+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+        + " VALUES ('"+curSenID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
       stmt.executeUpdate("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+curSen+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')"); 
-                }
+        + " VALUES ('"+curSenID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')"); 
+       stmt.executeUpdate("UPDATE `candidate` SET `curScore`=`curScore` + 1 WHERE  `canID`='"+curSenID+"';");         
+       
+       }
+             
         }
 //String[] senates = getSenate();
 //for(String curSen:senates){
@@ -764,15 +788,18 @@ for(String curSen: senates){
 
 //=================REP FOR ED=============================
 String[] reps = getReps();
-for(String curRep:reps){
+for(String curRepID:reps){
     
-    if(curRep!=null){
-       System.out.println("Rep: "+curRep);
+    if(curRepID!=null){
+       System.out.println("Rep: "+curRepID);
       System.out.println("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+curRep+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
+        + " VALUES ('"+curRepID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");
  
        stmt.executeUpdate("INSERT INTO votes (canID, terminal, ballot, score) "
-        + " VALUES ('"+curRep+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')");  
+        + " VALUES ('"+curRepID+"', '"+terminal+"', '"+nextBallot+"', '"+1+"')"); 
+       
+       stmt.executeUpdate("UPDATE `candidate` SET `curScore`=`curScore` + 1 WHERE  `canID`='"+curRepID+"';");         
+       
     }
 }
  
@@ -786,8 +813,8 @@ JOptionPane.showMessageDialog(rootPane, "Ballot successfully casted!");
 clearAllSelection();  
 
 //entPres.requestFocus();
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }
@@ -829,21 +856,27 @@ clearRep();        // TODO add your handling code here:
     }//GEN-LAST:event_rep2ActionPerformed
 
     private void curTerminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_curTerminalActionPerformed
-String conf = JOptionPane.showInputDialog(rootPane, "Enter confirmation number");
-if(conf!=null){
-if(conf.equals("banesgwapo14344")){
+//TODO remove comments later
+//String conf = JOptionPane.showInputDialog(rootPane, "Enter confirmation number");
+//if(conf!=null){
+//if(conf.equals(CHANGE_PASS)){
      loadPresNames();
      loadVPNames();
      loadSenateNames();
      loadRepNames();
-     curTerminal.setEnabled(false);
-}else{
-       JOptionPane.showMessageDialog(rootPane, "Incorrect Code", "Denied", JOptionPane.ERROR_MESSAGE); 
-    }
-}
+//   curTerminal.setEnabled(false);
+//}else{
+//       JOptionPane.showMessageDialog(rootPane, "Incorrect Code", "Denied", JOptionPane.ERROR_MESSAGE); 
+//    }
+//}
 
      // TODO add your handling code here:
     }//GEN-LAST:event_curTerminalActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+ loadPresNames();
+ // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -882,6 +915,7 @@ if(conf.equals("banesgwapo14344")){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> curTerminal;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -1052,13 +1086,13 @@ if(conf.equals("banesgwapo14344")){
     }
     
      String getTerminal(){
-       return curTerminal.getSelectedItem().toString();
+       return curTerminal.getSelectedItem().toString().toLowerCase()+"rep";
    }
 
    int getCurrentBallot(String terminal){
 int curBal = -1;
        try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1070,8 +1104,8 @@ if(rs.next()){
 curBal = rs.getInt("current");
  
 }
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }  
@@ -1080,15 +1114,15 @@ curBal = rs.getInt("current");
    
   
    
-   String getPresident(){
+   String getPresidentID(){
        String[] ids = getPresIDS();
        String pres = "";
        int index = 0;
        if(pres1.isSelected()){
           pres = ids[index];
        }
-//       else if(pres2.isSelected()){
-//           pres = "2";
+//     else if(pres2.isSelected()){
+//          pres = "2";
 //       }
        else{
            pres = "-1";
@@ -1300,17 +1334,12 @@ return senates;
   //     entRep.setText("");
    }
    
-   //=====================================================
+//=====================================================
    
   void loadPresNames(){
      try{
-Class.forName("com.mysql.jdbc.Driver");
-
 Connection con = DriverManager.getConnection(conURL);
-  
 Statement stmt = con.createStatement();
-
-
 ResultSet rs = stmt.executeQuery("SELECT canNum, canName FROM candidate "
                            + "WHERE canPos = '"+POS_PRES+"'");
 if(rs.next()){
@@ -1324,8 +1353,6 @@ if(rs.next()){
 //    presName2.setText(canName2.substring(0, canName2.indexOf(","))+": "); // cutOff Lname Only
 //}
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
@@ -1333,7 +1360,7 @@ if(rs.next()){
   
   void loadVPNames(){
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1354,8 +1381,8 @@ if(rs.next()){
 //    vpName2.setText(canName2.substring(0, canName2.indexOf(","))+": "); // cutOff Lname Only
 //}
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
@@ -1363,7 +1390,7 @@ if(rs.next()){
  
   void loadSenateNames(){
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1459,12 +1486,12 @@ if(rs.next()){
 //if(rs.next()){
 //    sen24.setText(rs.getString("canNum")+".) "+rs.getString("canName"));
 //}
+ 
 
 
 
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
@@ -1473,13 +1500,8 @@ if(rs.next()){
    
   void loadRepNames(){
      try{
-Class.forName("com.mysql.jdbc.Driver");
-
 Connection con = DriverManager.getConnection(conURL);
-  
 Statement stmt = con.createStatement();
-
-
 ResultSet rs = stmt.executeQuery("SELECT canNum, canName FROM candidate "
                            + "WHERE canPos = '"+getTerminal()+"'");
 if(rs.next()){
@@ -1508,8 +1530,8 @@ if(rs.next()){
 //    repName4.setText(canName4.substring(0, canName4.indexOf(","))+": ");
 //}
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
@@ -1517,7 +1539,7 @@ if(rs.next()){
   
 void revertBallot(String terminal){
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1533,8 +1555,8 @@ stmt.executeUpdate("DELETE FROM `ssg`.`votes` WHERE  "
 stmt.executeUpdate("UPDATE `ballot` SET `current`=`current`-incNum "
                              + "WHERE  `terminal`='"+terminal+"';");
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }     
@@ -1543,7 +1565,7 @@ stmt.executeUpdate("UPDATE `ballot` SET `current`=`current`-incNum "
   
   void reZero(String terminal){
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1554,8 +1576,8 @@ stmt.executeUpdate("DELETE FROM `ssg`.`votes` WHERE terminal='"+terminal+"';");
 //UPDATE THE CURRENT BALLOT
 stmt.executeUpdate("UPDATE `ssg`.`ballot` SET `current`=`start` WHERE terminal='"+terminal+"';");
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }     
@@ -1565,7 +1587,7 @@ stmt.executeUpdate("UPDATE `ssg`.`ballot` SET `current`=`start` WHERE terminal='
 String[] getRepresentativeIDS(){
     String ids[] = null;
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1582,8 +1604,8 @@ while(rs.next()){
    index++;
 }
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
@@ -1593,7 +1615,7 @@ while(rs.next()){
 String[] getSenatorIDS(){
     String ids[] = null;
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1611,8 +1633,8 @@ while(rs.next()){
    index++;
 }
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
@@ -1622,7 +1644,7 @@ while(rs.next()){
 String[] getVPIDS(){
     String ids[] = null;
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1639,8 +1661,8 @@ while(rs.next()){
    index++;
 }
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
@@ -1651,7 +1673,7 @@ while(rs.next()){
 String[] getPresIDS(){
     String ids[] = null;
      try{
-Class.forName("com.mysql.jdbc.Driver");
+
 
 Connection con = DriverManager.getConnection(conURL);
   
@@ -1668,8 +1690,8 @@ while(rs.next()){
    index++;
 }
 
-}catch(ClassNotFoundException e){
-    e.printStackTrace();
+
+   
 }catch (SQLException ex) {
  Logger.getLogger(VoteMain.class.getName()).log(Level.SEVERE, null, ex);
 }    
