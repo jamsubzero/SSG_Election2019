@@ -20,6 +20,22 @@ angular.module('vote', [])
                 then(function (response) {
                     $scope.itrep = response.data;
                 });
+            $http.get('https://ssgdummyapi.herokuapp.com/ssgdummyapi/getresult/edrep').
+                then(function (response) {
+                    $scope.edrep = response.data;
+                });
+            $http.get('https://ssgdummyapi.herokuapp.com/ssgdummyapi/getresult/barep').
+                then(function (response) {
+                    $scope.barep = response.data;
+                });
+            $http.get('https://ssgdummyapi.herokuapp.com/ssgdummyapi/getresult/crrep').
+                then(function (response) {
+                    $scope.crrep = response.data;
+                });
+            $http.get('https://ssgdummyapi.herokuapp.com/ssgdummyapi/getresult/firep').
+                then(function (response) {
+                    $scope.firep = response.data;
+                });
 
             $timeout(function () {
                 $scope.reload();

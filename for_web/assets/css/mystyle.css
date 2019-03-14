@@ -1,0 +1,51 @@
+html,
+body {
+    height: 100%;
+    margin: 0px;
+}
+
+.sen:nth-child(-n+12),
+.reps:nth-child(-n+2),
+.pres:nth-child(1),
+.vpres:nth-child(1) {
+    font-weight: bold;
+}
+
+#td1px {
+    padding: 5px 2px;
+}
+
+.divpad1px {
+    padding: 5px 15px;
+}
+
+body {
+    background-color: #03A9F4;
+}
+
+#cardmargin {
+    margin: 40px 5px 5px 5px;
+}
+
+.card {
+    color: #FF5722;
+}
+
+.card .card-title {
+    margin: 5px;
+}
+
+#ssgtitle {
+    padding: 10px;
+    background-color: #FF5722;
+}
+
+h1 {
+    margin: auto;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.carousel .carousel-inner {
+    box-shadow: none;
+}
