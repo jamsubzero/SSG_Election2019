@@ -1,0 +1,72 @@
+<!doctype html>
+<html ng-app="vote">
+
+<head>
+    <title>SSG 2k19 Election</title>
+
+    <script src="../assets/js/angular/angular.min.js"></script>
+    <script src="../assets/js/angular/angular-route.min.js"></script>
+    <script src="../assets/js/result.js"></script>
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+    <link href="../assets/css/now-ui-dashboard.css" rel="stylesheet" />
+    <link href="../assets/css/mystyle.css" rel="stylesheet" />
+
+</head>
+
+<body class="login-page" ng-contoller="myController">
+
+    <div class="page-header clear-filter">
+        <div class="content">
+            <div class="container">
+                <div class="col-md-4 ml-auto mr-auto">
+                    <div class="card card-login card-plain">
+                        <form class="form" ng-submit="submitID()">
+                            <div class="card-header text-center">
+                                <h3 style="color: #ffffff;">SSG Election 2019</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="input-group no-border input-lg">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                                            <i class="now-ui-icons users_circle-08"></i>
+                                                          </span>
+                                    </div>
+                                    <input type="text" id="idnumber" class="form-control-lg form-control" placeholder="Enter ID Number" ng-model="id">
+                                    <div class="input-group-append"></div>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-round btn-lg btn-block" name="" value="Vote">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function myController($scope) {
+        $scope.submitID = function() {
+            var data = $scope.fields;
+            alert(data);
+            // $http.post("google.com", data);
+        }
+
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#idnumber').keyup(function() {
+            $(this).val($(this).val().toUpperCase());
+        });
+    });
+</script>
+
+</html>
