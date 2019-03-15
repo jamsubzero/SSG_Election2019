@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>SSG 2k19 Election</title>
+
+    <script src="../assets/js/angular/angular.min.js"></script>
+    <!--<script src="../assets/js/voting.js"></script>-->
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+    <link href="../assets/css/now-ui-dashboard.css" rel="stylesheet" />
+    <link href="../assets/css/mystyle.css" rel="stylesheet" />
+
+</head>
+
+</script>
+
+<body>
+    <div ng-app="myApp" ng-controller="myController">
+        {{ firstName + " " + lastName }}
+    </div>
+
+    <script>
+        angular.module("voting", [])
+            .controller("myController", function($scope) {
+                $scope.firstName = "John";
+                $scope.lastName = "Doe";
+            });
+    </script>
+</body>
+
+</html>

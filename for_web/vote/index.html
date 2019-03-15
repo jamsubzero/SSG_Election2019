@@ -1,12 +1,11 @@
 <!doctype html>
-<html ng-app="vote">
+<html>
 
 <head>
     <title>SSG 2k19 Election</title>
 
     <script src="../assets/js/angular/angular.min.js"></script>
-    <script src="../assets/js/angular/angular-route.min.js"></script>
-    <script src="../assets/js/result.js"></script>
+    <script src="../assets/js/vote.js"></script>
     <script src="../assets/js/core/jquery.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -18,14 +17,14 @@
 
 </head>
 
-<body class="login-page" ng-contoller="myController">
+<body class="login-page">
 
     <div class="page-header clear-filter">
         <div class="content">
             <div class="container">
                 <div class="col-md-4 ml-auto mr-auto">
-                    <div class="card card-login card-plain">
-                        <form class="form" ng-submit="submitID()">
+                    <div class="card card-login card-plain" ng-app="vote" ng-controller="myController">
+                        <form class="form">
                             <div class="card-header text-center">
                                 <h3 style="color: #ffffff;">SSG Election 2019</h3>
                             </div>
@@ -39,7 +38,10 @@
                                     <input type="text" id="idnumber" class="form-control-lg form-control" placeholder="Enter ID Number" ng-model="id">
                                     <div class="input-group-append"></div>
                                 </div>
-                                <input type="submit" class="btn btn-primary btn-round btn-lg btn-block" name="" value="Vote">
+                                <div>
+                                    <input ng-click="myFunc()" type="submit" class="btn btn-primary btn-round btn-lg btn-block" name="" value="Vote">
+                                    <p>{{count}}</p>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -51,14 +53,45 @@
 </body>
 
 <script>
-    function myController($scope) {
-        $scope.submitID = function() {
-            var data = $scope.fields;
-            alert(data);
-            // $http.post("google.com", data);
-        }
-
-    }
+    angular.module('vote', [])
+        .controller('myController', ['$scope', '$http', '$window', '$cookies', function($scope, $http, $window, $cookies) {
+            //$scope.count = 0;
+            $scope.myFunc = function() {
+                var id = $scope.id;
+                $http({
+                    method: 'POST',
+                    url: 'http://192.168.1.173:8080/vote/voterequest',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        "id": id
+                    }
+                }).then(function(response) {
+                    //console.log(response);
+                    $scope.res = response;
+                    var exist = $scope.res.data.exist;
+                    var voted = $scope.res.data.voted;
+                    var id = $scope.res.data.id;
+                    var name = $scope.res.data.name;
+                    if (exist == 0) {
+                        alert("Not Existing");
+                    } else {
+                        if (voted == 0) {
+                            alert("You can vote");
+                            $cookies.put('id', id);
+                            $cookies.put('name', name);
+                            $window.location.href = '../voting';
+                        } else {
+                            alert("You already VOTED!");
+                        }
+                    }
+                }, function(error) {
+                    console.log(error);
+                });
+                //alert(req);
+            };
+        }]);
 </script>
 
 <script>
