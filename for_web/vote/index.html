@@ -54,7 +54,7 @@
 
 <script>
     angular.module('vote', [])
-        .controller('myController', ['$scope', '$http', '$window', '$cookies', function($scope, $http, $window, $cookies) {
+        .controller('myController', ['$scope', '$http', '$window', function($scope, $http, $window) {
             //$scope.count = 0;
             $scope.myFunc = function() {
                 var id = $scope.id;
@@ -79,9 +79,9 @@
                     } else {
                         if (voted == 0) {
                             alert("You can vote");
-                            $cookies.put('id', id);
-                            $cookies.put('name', name);
-                            $window.location.href = '../voting';
+                            //$cookies.put('id', id);
+                            //$cookies.put('name', name);
+                            //$window.location.href = '../voting';
                         } else {
                             alert("You already VOTED!");
                         }
