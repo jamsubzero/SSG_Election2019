@@ -23,10 +23,23 @@
         <div class="content">
             <div class="container">
                 <div class="col-md-4 ml-auto mr-auto">
-                    <div class="card card-login card-plain" ng-app="vote" ng-controller="myController">
+                    <div class="card card-login card-plain" ng-app="vote" ng-controller="myCtrl">
                         <form class="form">
                             <div class="card-header text-center">
                                 <h3 style="color: #ffffff;">SSG Election 2019</h3>
+                            </div>
+                            <div class="alert alert-warning" role="alert" ng-show="IsVisible">
+                                <div class="container">
+                                    <div class="alert-icon">
+                                        <i class="now-ui-icons ui-1_bell-53"></i>
+                                    </div>
+                                    You are not logged in.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">
+                                                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                                                </span>
+                                              </button>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="input-group no-border input-lg">
@@ -54,10 +67,18 @@
 
 <script>
     angular.module('vote', [])
-        .controller('myController', ['$scope', '$http', '$window', function($scope, $http, $window) {
+        .controller('myCtrl', ['$scope', function($scope, $window, $http) {
             //$scope.count = 0;
+            localStorage.setItem('name', null);
+            if (localStorage.getItem('error') == 2) {
+                $scope.IsVisible = true;
+            } else {
+                $scope.IsVisible = false;
+            }
+
             $scope.myFunc = function() {
                 var id = $scope.id;
+                localStorage.setItem('name', 'Ruben');
                 $http({
                     method: 'POST',
                     url: 'http://192.168.1.173:8080/vote/voterequest',
@@ -79,9 +100,12 @@
                     } else {
                         if (voted == 0) {
                             alert("You can vote");
+                            // $scope.setCookie = function() {
+                            //         $cookies.put('name', id);
+                            //     }
                             //$cookies.put('id', id);
                             //$cookies.put('name', name);
-                            //$window.location.href = '../voting';
+                            $window.location.href = '../voting';
                         } else {
                             alert("You already VOTED!");
                         }

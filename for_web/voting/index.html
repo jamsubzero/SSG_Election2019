@@ -20,17 +20,23 @@
 </script>
 
 <body>
-    <div ng-app="myApp" ng-controller="myController">
-        {{ firstName + " " + lastName }}
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+        Name: <input ng-model="name">
     </div>
 
     <script>
-        angular.module("voting", [])
-            .controller("myController", function($scope) {
-                $scope.firstName = "John";
-                $scope.lastName = "Doe";
-            });
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope, $window) {
+            $scope.name = localStorage.getItem('name');
+
+            if (localStorage.getItem('name') == null) {
+                localStorage.setItem('error', 2);
+                $window.location.href = "../vote";
+            }
+        });
     </script>
+
 </body>
 
 </html>
