@@ -28,17 +28,56 @@
                             <div class="card-header text-center">
                                 <h3 style="color: #ffffff;">SSG Election 2019</h3>
                             </div>
-                            <div class="alert alert-warning" role="alert" ng-show="IsVisible">
+                            <div class="alert alert-warning" role="alert" ng-show="IsVisible_ir">
                                 <div class="container">
                                     <div class="alert-icon">
                                         <i class="now-ui-icons ui-1_bell-53"></i>
                                     </div>
-                                    You are not logged in.
+                                    Invalid Request.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">
                                                   <i class="now-ui-icons ui-1_simple-remove"></i>
                                                 </span>
                                               </button>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-show="IsVisible_ider">
+                                <div class="container">
+                                    <div class="alert-icon">
+                                        <i class="now-ui-icons ui-1_bell-53"></i>
+                                    </div>
+                                    ID Number NOT Found.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">
+                                                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                                                    </span>
+                                                  </button>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning" role="alert" ng-show="IsVisible_voted">
+                                <div class="container">
+                                    <div class="alert-icon">
+                                        <i class="now-ui-icons ui-1_bell-53"></i>
+                                    </div>
+                                    You Already Voted.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">
+                                                          <i class="now-ui-icons ui-1_simple-remove"></i>
+                                                        </span>
+                                                      </button>
+                                </div>
+                            </div>
+                            <div class="alert alert-success" role="alert" ng-show="IsVisible_voted_success">
+                                <div class="container">
+                                    <div class="alert-icon">
+                                        <i class="now-ui-icons ui-1_bell-53"></i>
+                                    </div>
+                                    Successfully Voted.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">
+                                                              <i class="now-ui-icons ui-1_simple-remove"></i>
+                                                            </span>
+                                                          </button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -69,11 +108,15 @@
     angular.module('vote', [])
         .controller('myCtrl', ['$scope', function($scope, $window, $http) {
             //$scope.count = 0;
-            localStorage.setItem('name', null);
+            localStorage.removeItem('name');
             if (localStorage.getItem('error') == 2) {
-                $scope.IsVisible = true;
+                $scope.IsVisible_ir = true;
+                localStorage.removeItem('error');
             } else {
-                $scope.IsVisible = false;
+                $scope.IsVisible_ir = false;
+                $scope.IsVisible_ider = false;
+                $scope.IsVisible_voted = false;
+                $scope.IsVisible_voted_success = false;
             }
 
             $scope.myFunc = function() {
