@@ -5,10 +5,10 @@
     <title>SSG 2k19 Election</title>
 
     <script src="../assets/js/angular/angular.min.js"></script>
-    <script src="../assets/js/vote.js"></script>
     <script src="../assets/js/core/jquery.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/vote.js"></script>
 
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
@@ -87,7 +87,7 @@
                                                             <i class="now-ui-icons users_circle-08"></i>
                                                           </span>
                                     </div>
-                                    <input type="text" id="idnumber" class="form-control-lg form-control" placeholder="Enter ID Number" ng-model="id">
+                                    <input type="text" id="idnumber" class="form-control-lg form-control" placeholder="Enter ID Number" ng-model="id" required>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div>
@@ -103,63 +103,6 @@
     </div>
 
 </body>
-
-<script>
-    angular.module('vote', [])
-        .controller('myCtrl', ['$scope', function($scope, $window, $http) {
-            //$scope.count = 0;
-            localStorage.removeItem('name');
-            if (localStorage.getItem('error') == 2) {
-                $scope.IsVisible_ir = true;
-                localStorage.removeItem('error');
-            } else {
-                $scope.IsVisible_ir = false;
-                $scope.IsVisible_ider = false;
-                $scope.IsVisible_voted = false;
-                $scope.IsVisible_voted_success = false;
-            }
-
-            $scope.myFunc = function() {
-                var id = $scope.id;
-                localStorage.setItem('name', 'Ruben');
-                $http({
-                    method: 'POST',
-                    url: 'http://192.168.1.173:8080/vote/voterequest',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        "id": id
-                    }
-                }).then(function(response) {
-                    //console.log(response);
-                    $scope.res = response;
-                    var exist = $scope.res.data.exist;
-                    var voted = $scope.res.data.voted;
-                    var id = $scope.res.data.id;
-                    var name = $scope.res.data.name;
-                    if (exist == 0) {
-                        alert("Not Existing");
-                    } else {
-                        if (voted == 0) {
-                            alert("You can vote");
-                            // $scope.setCookie = function() {
-                            //         $cookies.put('name', id);
-                            //     }
-                            //$cookies.put('id', id);
-                            //$cookies.put('name', name);
-                            $window.location.href = '../voting';
-                        } else {
-                            alert("You already VOTED!");
-                        }
-                    }
-                }, function(error) {
-                    console.log(error);
-                });
-                //alert(req);
-            };
-        }]);
-</script>
 
 <script>
     $(document).ready(function() {

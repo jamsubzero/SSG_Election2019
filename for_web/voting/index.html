@@ -5,10 +5,10 @@
     <title>SSG 2k19 Election</title>
 
     <script src="../assets/js/angular/angular.min.js"></script>
-    <!--<script src="../assets/js/voting.js"></script>-->
     <script src="../assets/js/core/jquery.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/voting.js"></script>
 
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
@@ -20,23 +20,131 @@
 </script>
 
 <body>
+    <div ng-app="voting" ng-controller="myCtrl">
+        <div id="ssgtitle">
+            <h1>SSG ELECTION 2019</h1>
+        </div>
+        <h4 style="color:white; text-align: center; background-color: #1976D2; margin: 0">Voter: {{name}}</h4>
+        <div class="container">
+            <form ng-submit="castBallot()">
+                <div class="row">
+                    <div class="card" id="cardmargin">
+                        <div class="card-body">
+                            <h4 class="card-title">President <span style="color: #757575; font-size: 16px; float: right;">({{checkedNumberP}} out of 1)</span></h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th></th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="p in pres">
+                                        <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                        <td>
+                                            <label class="text-center containerc">
+                                                            <input type="checkbox" name="president" ng-model="p.checked" ng-click="checkP(p,$index)" ng-disabled="!p.checked && checkedNumberP === limitNumberP" ng-value="{{p.id}}">
+                                                           <span class="checkmarkc">
+                                                          </label>
+                                        </td>
+                                        <td>{{p.name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-    <div ng-app="myApp" ng-controller="myCtrl">
-        Name: <input ng-model="name">
+                    <div class="card" id="cardmargin">
+                        <div class="card-body">
+                            <h4 class="card-title">Vice President <span style="color: #757575; font-size: 16px; float: right;">({{checkedNumberVP}} out of 1)</span></h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th></th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="vp in vpres">
+                                        <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                        <td>
+                                            <label class="text-center containerc">
+                                                                <input type="checkbox" name="vicepresident" ng-model="vp.checked" ng-click="checkVP(vp,$index)" ng-disabled="!vp.checked && checkedNumberVP === limitNumberVP" ng-value="{{vp.id}}">
+                                                                <span class="checkmarkc"></span>
+                                                              </label>
+                                        </td>
+                                        <td>{{vp.name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card" id="cardmargin">
+                        <div class="card-body">
+                            <h4 class="card-title">Senators <span style="color: #757575; font-size: 16px; float: right;">({{checkedNumberSEN}} out of 12)</span></h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th></th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="s in sen">
+                                        <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                        <td>
+                                            <label class="text-center containerc">
+                                                                        <input type="checkbox" name="senators" ng-model="s.selected" ng-click="checkSEN(s,$index)" ng-disabled="!s.checked && checkedNumberSEN === limitNumberSEN" ng-value="{{s.id}}">
+                                                                        <span class="checkmarkc"></span>
+                                                                      </label>
+
+                                        </td>
+                                        <td>{{s.name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card" id="cardmargin">
+                        <div class="card-body">
+                            <h4 class="card-title">{{course}} Representatives <span style="color: #757575; font-size: 16px; float: right;">({{checkedNumberSEN}} out of 2)</span></h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th></th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="r in rep">
+                                        <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                        <td>
+                                            <label class="text-center containerc">
+                                                                            <input type="checkbox" name="representatives" ng-model="r.selected" ng-click="checkREP(r,$index)" ng-disabled="!r.checked && checkedNumberREP === limitNumberREP" ng-value="{{r.id}}">
+                                                                            <span class="checkmarkc"></span>
+                                                                          </label>
+
+                                        </td>
+                                        <td>{{s.name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Cast Ballot">{{presidentSel}} {{VicePresidentSel}} {{senatorArray}}
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <script>
-        var app = angular.module('myApp', []);
-        app.controller('myCtrl', function($scope, $window) {
-            $scope.name = localStorage.getItem('name');
-
-            if (localStorage.getItem('name') == null) {
-                localStorage.setItem('error', 2);
-                $window.location.href = "../vote";
-            }
-        });
-    </script>
-
 </body>
 
 </html>
