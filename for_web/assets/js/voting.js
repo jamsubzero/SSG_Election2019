@@ -99,7 +99,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
     $scope.saveSen = function() {
         $scope.senatorArray = [];
         angular.forEach($scope.sen, function(s) {
-            if (s.selected) {
+            if (s.checked) {
                 $scope.senatorArray.push(s.id);
             }
         });
@@ -107,7 +107,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
     $scope.saveRep = function() {
         $scope.RepresentativeArray = [];
         angular.forEach($scope.rep, function(r) {
-            if (r.selected) {
+            if (r.checked) {
                 $scope.RepresentativeArray.push(r.id);
             }
         });

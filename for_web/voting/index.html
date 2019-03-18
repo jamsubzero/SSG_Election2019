@@ -98,7 +98,7 @@
                                         <td class="text-center" id="td1px">{{$index + 1}}</td>
                                         <td>
                                             <label class="text-center containerc">
-                                                                        <input type="checkbox" name="senators" ng-model="s.selected" ng-click="checkSEN(s,$index)" ng-disabled="!s.checked && checkedNumberSEN === limitNumberSEN" ng-value="{{s.id}}">
+                                                                        <input type="checkbox" name="senators" ng-model="s.checked" ng-click="checkSEN(s,$index)" ng-disabled="!s.checked && checkedNumberSEN === limitNumberSEN" ng-value="{{s.id}}">
                                                                         <span class="checkmarkc"></span>
                                                                       </label>
 
@@ -126,7 +126,7 @@
                                         <td class="text-center" id="td1px">{{$index + 1}}</td>
                                         <td>
                                             <label class="text-center containerc">
-                                                                            <input type="checkbox" name="representatives" ng-model="r.selected" ng-click="checkREP(r,$index)" ng-disabled="!r.checked && checkedNumberREP === limitNumberREP" ng-value="{{r.id}}">
+                                                                            <input type="checkbox" name="representatives" ng-model="r.checked" ng-click="checkREP(r,$index)" ng-disabled="!r.checked && checkedNumberREP === limitNumberREP" ng-value="{{r.id}}">
                                                                             <span class="checkmarkc"></span>
                                                                           </label>
 
