@@ -3,6 +3,13 @@ angular.module('vote', [])
         //$scope.count = 0;
         localStorage.removeItem('name');
         localStorage.removeItem('id');
+        localStorage.removeItem('course');
+
+        // $scope.voteButtonText = "Vote";
+        // $scope.voteBtnTxt = function() {
+        //     $scope.voteButtonText = "Loading";
+        // }
+
         if (localStorage.getItem('error') == 2) {
             $scope.IsVisible_ir = true;
             localStorage.removeItem('error');
@@ -31,6 +38,7 @@ angular.module('vote', [])
                 var voted = $scope.res.data.voted;
                 var id = $scope.res.data.id;
                 var name = $scope.res.data.name;
+                var course = $scope.res.data.course;
                 if (exist == 0) {
                     //alert("Not Existing");
                     $scope.IsVisible_ider = true;
@@ -39,6 +47,7 @@ angular.module('vote', [])
                         //alert("You can vote");
                         localStorage.setItem('name', name);
                         localStorage.setItem('id', id);
+                        localStorage.setItem('course', course);
                         $window.location.href = '../voting';
                     } else {
                         //alert("You already VOTED!");

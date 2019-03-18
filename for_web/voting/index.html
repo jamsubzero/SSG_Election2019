@@ -112,7 +112,7 @@
 
                     <div class="card" id="cardmargin">
                         <div class="card-body">
-                            <h4 class="card-title">{{course}} Representatives <span style="color: #757575; font-size: 16px; float: right;">({{checkedNumberSEN}} out of 2)</span></h4>
+                            <h4 class="card-title">{{courser}} Representatives <span style="color: #757575; font-size: 16px; float: right;">({{checkedNumberREP}} out of 2)</span></h4>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -131,7 +131,7 @@
                                                                           </label>
 
                                         </td>
-                                        <td>{{s.name}}</td>
+                                        <td>{{r.name}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="card-body text-center">
-                        <input type="submit" class="btn btn-primary btn-lg" value="Cast Ballot">{{presidentSel}} {{VicePresidentSel}} {{senatorArray}}
+                        <input type="submit" class="btn btn-primary btn-lg" value="Cast Ballot">{{presidentSel}} {{VicePresidentSel}} {{senatorArray}} {{RepresentativeArray}}
                     </div>
                 </div>
             </form>

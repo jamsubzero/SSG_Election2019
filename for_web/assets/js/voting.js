@@ -21,6 +21,23 @@ app.controller('myCtrl', function($scope, $http, $window) {
         $scope.sen = response.data;
     });
 
+    $scope.course = localStorage.getItem('course');
+
+    if ($scope.course.includes('BSBA')) {
+        $scope.courser = "Business Administration";
+        $http.get($scope.url + '/ssgapi/get/barep').
+        then(function(response) {
+            $scope.rep = response.data;
+        });
+    } else if ($scope.course.includes('BSCRIM')) {
+        $scope.courser = "Criminology";
+        $http.get($scope.url + '/ssgapi/get/crrep').
+        then(function(response) {
+            $scope.rep = response.data;
+        });
+    }
+
+
 
 
     //limitations
@@ -55,9 +72,9 @@ app.controller('myCtrl', function($scope, $http, $window) {
     }
 
     $scope.checkedNumberREP = 0;
-    $scope.limitNumberREP = 12;
+    $scope.limitNumberREP = 2;
     $scope.checkREP = function(r) {
-        if (s.checked) {
+        if (r.checked) {
             $scope.checkedNumberREP--;
         } else {
             $scope.checkedNumberREP++;
@@ -87,12 +104,20 @@ app.controller('myCtrl', function($scope, $http, $window) {
             }
         });
     }
+    $scope.saveRep = function() {
+        $scope.RepresentativeArray = [];
+        angular.forEach($scope.rep, function(r) {
+            if (r.selected) {
+                $scope.RepresentativeArray.push(r.id);
+            }
+        });
+    }
 
 
     $scope.castBallot = function() {
         $scope.savePres();
         $scope.saveVPres();
         $scope.saveSen();
-
+        $scope.saveRep();
     }
 });

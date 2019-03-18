@@ -24,7 +24,7 @@
             <div class="container">
                 <div class="col-md-4 ml-auto mr-auto">
                     <div class="card card-login card-plain" ng-app="vote" ng-controller="myCtrl">
-                        <form class="form">
+                        <form class="form" ng-submit="myFunc();">
                             <div class="card-header text-center">
                                 <h3 style="color: #ffffff;">SSG Election 2019</h3>
                             </div>
@@ -91,7 +91,7 @@
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div>
-                                    <input ng-click="myFunc()" type="submit" class="btn btn-primary btn-round btn-lg btn-block" name="" value="Vote">
+                                    <input type="submit" class="btn btn-primary btn-round btn-lg btn-block" name="" value="Vote">
                                     <p>{{count}}</p>
                                 </div>
                             </div>
