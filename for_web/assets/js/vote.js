@@ -10,9 +10,17 @@ angular.module('vote', [])
         //     $scope.voteButtonText = "Loading";
         // }
 
+        if (localStorage.getItem('success') == 1) {
+            $scope.IsVisible_voted_success = true;
+            //localStorage.removeItem('success');
+        }
+        if (localStorage.getItem('error') == 3) {
+            $scope.IsVisible_voted = true;
+            //localStorage.removeItem('error');
+        }
         if (localStorage.getItem('error') == 2) {
             $scope.IsVisible_ir = true;
-            localStorage.removeItem('error');
+            //localStorage.removeItem('error');
         } else {
             $scope.IsVisible_ir = false;
             $scope.IsVisible_ider = false;

@@ -1,5 +1,6 @@
 var app = angular.module('voting', []);
 app.controller('myCtrl', function($scope, $http, $window) {
+    $scope.id = localStorage.getItem('id');
     $scope.name = localStorage.getItem('name');
     $scope.url = "http://192.168.1.173:8080"
 
@@ -83,6 +84,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
 
     //vote
     $scope.savePres = function() {
+        $scope.presidentSel = -1;
         angular.forEach($scope.pres, function(p) {
             if (p.checked) {
                 $scope.presidentSel = p.id;
@@ -90,6 +92,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
         });
     }
     $scope.saveVPres = function() {
+        $scope.VicePresidentSel = -1;
         angular.forEach($scope.vpres, function(vp) {
             if (vp.checked) {
                 $scope.VicePresidentSel = vp.id;
@@ -119,5 +122,59 @@ app.controller('myCtrl', function($scope, $http, $window) {
         $scope.saveVPres();
         $scope.saveSen();
         $scope.saveRep();
+        $http({
+            method: 'POST',
+            url: 'http://192.168.1.173:8080/vote/voterequest',
+            data: {
+                "id": $scope.id
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function(response) {
+            //console.log(response);
+            $scope.res = response;
+            var exist = $scope.res.data.exist;
+            var voted = $scope.res.data.voted;
+            if (exist == 0) {
+                //alert("Not Existing");
+                localStorage.setItem('error', 2);
+                $window.location.href = '../vote';
+            } else {
+                if (voted == 0) {
+                    //alert("You can vote");
+                    $http({
+                        method: 'POST',
+                        url: 'http://192.168.1.173:8080/vote/castballot',
+                        data: {
+                            "voter": $scope.id,
+                            "pres": $scope.presidentSel,
+                            "vp": $scope.VicePresidentSel,
+                            "sen": $scope.senatorArray,
+                            "rep": $scope.RepresentativeArray
+                        },
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(function(response2) {
+                        $scope.res2 = response2;
+                        if ($scope.res2.data.result == "Success") {
+                            localStorage.setItem('success', 1);
+                            $window.location.href = '../vote';
+                        }
+                        //console.log($scope.res2);
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+                } else {
+                    //alert("You already VOTED!");
+                    localStorage.setItem('error', 3);
+                    $window.location.href = '../vote';
+                }
+            }
+        }, function(error) {
+            console.log(error);
+        });
     }
 });
