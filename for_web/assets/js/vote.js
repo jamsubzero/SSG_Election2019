@@ -20,8 +20,10 @@ angular.module('vote', [])
 
         if (sessionStorage.getItem('success') == 1) {
             $scope.IsVisible_voted_success = true;
+            sessionStorage.removeItem('success');
         } else if (sessionStorage.getItem('error') == 2) {
             $scope.IsVisible_ir = true;
+            sessionStorage.removeItem('error');
         }
         // } else if (sessionStorage.getItem('error') == 3) {
         //     $scope.IsVisible_voted = true;
