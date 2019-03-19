@@ -91,7 +91,10 @@
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div>
-                                    <input type="submit" class="btn btn-primary btn-round btn-lg btn-block" name="" value="Vote">
+                                    <button type="submit" class="btn btn-primary btn-round btn-lg btn-block"> 
+                                        <span ng-show="voteButtonLoading"><i class="now-ui-icons loader_refresh spin"></i></span>
+                                        {{ voteButtonText }}
+                                    </button>
                                     <p>{{count}}</p>
                                 </div>
                             </div>

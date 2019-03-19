@@ -1,12 +1,14 @@
 var app = angular.module('voting', []);
 app.controller('myCtrl', function($scope, $http, $window) {
-    $scope.id = localStorage.getItem('id');
-    $scope.name = localStorage.getItem('name');
+    $scope.id = sessionStorage.getItem('id');
+    $scope.name = sessionStorage.getItem('name');
     $scope.url = "http://192.168.1.173:8080"
 
-    if (localStorage.getItem('name') == null) {
-        localStorage.setItem('error', 2);
+    if (sessionStorage.getItem('name') == null) {
+        sessionStorage.setItem('error', 2);
         $window.location.href = "../vote";
+    } {
+        sessionStorage.removeItem('error');
     }
     //get candidates
     $http.get($scope.url + '/ssgapi/get/pres').
@@ -22,7 +24,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
         $scope.sen = response.data;
     });
 
-    $scope.course = localStorage.getItem('course');
+    $scope.course = sessionStorage.getItem('course');
 
     if ($scope.course.includes('BSBA')) {
         $scope.courser = "Business Administration";
@@ -36,10 +38,25 @@ app.controller('myCtrl', function($scope, $http, $window) {
         then(function(response) {
             $scope.rep = response.data;
         });
+    } else if ($scope.course.includes('BSFI')) {
+        $scope.courser = "Fisheries";
+        $http.get($scope.url + '/ssgapi/get/firep').
+        then(function(response) {
+            $scope.rep = response.data;
+        });
+    } else if ($scope.course.includes('BSIND') || $scope.course.includes('BSIT')) {
+        $scope.courser = "Information Technology";
+        $http.get($scope.url + '/ssgapi/get/itrep').
+        then(function(response) {
+            $scope.rep = response.data;
+        });
+    } else if ($scope.course.includes('BEED') || $scope.course.includes('BSED') || $scope.course.includes('BTLED')) {
+        $scope.courser = "Education";
+        $http.get($scope.url + '/ssgapi/get/edrep').
+        then(function(response) {
+            $scope.rep = response.data;
+        });
     }
-
-
-
 
     //limitations
     $scope.checkedNumberP = 0;
@@ -138,7 +155,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
             var voted = $scope.res.data.voted;
             if (exist == 0) {
                 //alert("Not Existing");
-                localStorage.setItem('error', 2);
+                sessionStorage.setItem('error', 2);
                 $window.location.href = '../vote';
             } else {
                 if (voted == 0) {
@@ -159,7 +176,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
                     }).then(function(response2) {
                         $scope.res2 = response2;
                         if ($scope.res2.data.result == "Success") {
-                            localStorage.setItem('success', 1);
+                            sessionStorage.setItem('success', 1);
                             $window.location.href = '../vote';
                         }
                         //console.log($scope.res2);
@@ -169,7 +186,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
 
                 } else {
                     //alert("You already VOTED!");
-                    localStorage.setItem('error', 3);
+                    sessionStorage.setItem('error', 3);
                     $window.location.href = '../vote';
                 }
             }

@@ -1,35 +1,53 @@
 angular.module('vote', [])
     .controller('myCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
         //$scope.count = 0;
-        localStorage.removeItem('name');
-        localStorage.removeItem('id');
-        localStorage.removeItem('course');
+        sessionStorage.removeItem('name');
+        sessionStorage.removeItem('id');
+        sessionStorage.removeItem('course');
+
+        $scope.voteButtonText = "Vote";
+        $scope.test = "false";
+
+        // sessionStorage.removeItem('success');
+        // sessionStorage.removeItem('error');
 
         // $scope.voteButtonText = "Vote";
         // $scope.voteBtnTxt = function() {
         //     $scope.voteButtonText = "Loading";
         // }
 
-        if (localStorage.getItem('success') == 1) {
+        if (sessionStorage.getItem('success') == 1) {
             $scope.IsVisible_voted_success = true;
-            //localStorage.removeItem('success');
         }
-        if (localStorage.getItem('error') == 3) {
-            $scope.IsVisible_voted = true;
-            //localStorage.removeItem('error');
-        }
-        if (localStorage.getItem('error') == 2) {
-            $scope.IsVisible_ir = true;
-            //localStorage.removeItem('error');
-        } else {
+
+        // } else if (sessionStorage.getItem('error') == 3) {
+        //     $scope.IsVisible_voted = true;
+        //     //sessionStorage.removeItem('error');
+        // } else if (sessionStorage.getItem('error') == 2) {
+        //     $scope.IsVisible_ir = true;
+        //     //sessionStorage.removeItem('error');
+        // } else {
+        //     $scope.IsVisible_ir = false;
+        //     $scope.IsVisible_ider = false;
+        //     $scope.IsVisible_voted = false;
+        //     $scope.IsVisible_voted_success = false;
+        // }
+
+        $scope.myFunc = function() {
+            var id = $scope.id;
+
+            $scope.test = "true";
+            $scope.voteButtonLoading = true;
+            $scope.voteButtonText = "";
+
             $scope.IsVisible_ir = false;
             $scope.IsVisible_ider = false;
             $scope.IsVisible_voted = false;
             $scope.IsVisible_voted_success = false;
-        }
 
-        $scope.myFunc = function() {
-            var id = $scope.id;
+            sessionStorage.removeItem('error');
+            sessionStorage.removeItem('success');
+
             $http({
                 method: 'POST',
                 url: 'http://192.168.1.173:8080/vote/voterequest',
@@ -50,12 +68,15 @@ angular.module('vote', [])
                 if (exist == 0) {
                     //alert("Not Existing");
                     $scope.IsVisible_ider = true;
+                    $scope.voteButtonLoading = false;
+                    $scope.voteButtonText = "Vote";
                 } else {
                     if (voted == 0) {
                         //alert("You can vote");
-                        localStorage.setItem('name', name);
-                        localStorage.setItem('id', id);
-                        localStorage.setItem('course', course);
+                        sessionStorage.setItem('name', name);
+                        sessionStorage.setItem('id', id);
+                        sessionStorage.setItem('course', course);
+                        sessionStorage.removeItem('success');
                         $window.location.href = '../voting';
                     } else {
                         //alert("You already VOTED!");
