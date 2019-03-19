@@ -1,51 +1,19 @@
-angular.module('vote', [])
+angular.module('comselect', [])
     .controller('myCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
-        //$scope.count = 0;
-        sessionStorage.removeItem('name');
-        sessionStorage.removeItem('id');
-        sessionStorage.removeItem('course');
 
-        $scope.voteButtonText = "Vote";
-
-        // sessionStorage.removeItem('success');
-        // sessionStorage.removeItem('error');
-
-        // $scope.voteButtonText = "Vote";
-        // $scope.voteBtnTxt = function() {
-        //     $scope.voteButtonText = "Loading";
-        // }
-
-        if (sessionStorage.getItem('success') == 1) {
-            $scope.IsVisible_voted_success = true;
-        }
-
-        // } else if (sessionStorage.getItem('error') == 3) {
-        //     $scope.IsVisible_voted = true;
-        //     //sessionStorage.removeItem('error');
-        // } else if (sessionStorage.getItem('error') == 2) {
-        //     $scope.IsVisible_ir = true;
-        //     //sessionStorage.removeItem('error');
-        // } else {
-        //     $scope.IsVisible_ir = false;
-        //     $scope.IsVisible_ider = false;
-        //     $scope.IsVisible_voted = false;
-        //     $scope.IsVisible_voted_success = false;
-        // }
+        $scope.generateButtonText = "Generate";
+        $scope.pass = "";
 
         $scope.myFunc = function() {
             var id = $scope.id;
             var pass = $scope.pass;
 
-            $scope.voteButtonLoading = true;
-            $scope.voteButtonText = "";
+            $scope.generateButtonLoading = true;
+            $scope.generateButtonText = " Generating";
 
-            $scope.IsVisible_ir = false;
             $scope.IsVisible_ider = false;
             $scope.IsVisible_voted = false;
-            $scope.IsVisible_voted_success = false;
 
-            sessionStorage.removeItem('error');
-            sessionStorage.removeItem('success');
 
             $http({
                 method: 'POST',
@@ -67,21 +35,20 @@ angular.module('vote', [])
                 if (exist == 0) {
                     //alert("Not Existing");
                     $scope.IsVisible_ider = true;
-                    $scope.voteButtonLoading = false;
-                    $scope.voteButtonText = "Vote";
+                    $scope.generateButtonLoading = false;
+                    $scope.generateButtonText = "Generate";
                 } else {
                     if (voted == 0) {
+                        $scope.pass = "SADASDSAD";
+                        $scope.generateButtonLoading = false;
+                        $scope.generateButtonText = "Generate";
                         //alert("You can vote");
-                        sessionStorage.setItem('name', name);
-                        sessionStorage.setItem('id', id);
-                        sessionStorage.setItem('course', course);
-                        sessionStorage.removeItem('success');
-                        $window.location.href = '../voting';
+                        //$window.location.href = '../voting';
                     } else {
                         //alert("You already VOTED!");
                         $scope.IsVisible_voted = true;
-                        $scope.voteButtonLoading = false;
-                        $scope.voteButtonText = "Vote";
+                        $scope.generateButtonLoading = false;
+                        $scope.generateButtonText = "Generate";
                     }
                 }
             }, function(error) {

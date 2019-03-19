@@ -9,7 +9,7 @@
     <script src="../assets/js/core/jquery.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/vote.js"></script>
+    <script src="../assets/js/comselect.js"></script>
 
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
@@ -23,36 +23,18 @@
     <div class="page-header clear-filter">
         <div class="content">
             <div class="container">
-                <div class="col-sm-4 ml-auto mr-auto">
-                    <div class="card card-login card-plain" ng-app="vote" ng-controller="myCtrl">
+                <div class="col-sm-6 ml-auto mr-auto">
+                    <div class="card card-login card-plain" ng-app="comselect" ng-controller="myCtrl">
                         <form class="form" ng-submit="myFunc();">
                             <div class="card-header text-center">
-                                <h3 style="color: #ffffff;">SSG Election 2019</h3>
-                            </div>
-                            <div class="alert alert-warning" role="alert" ng-show="IsVisible_ir">
-                                <div class="container">
-                                    <div class="alert-icon">
-                                        <i class="now-ui-icons ui-1_bell-53"></i>
-                                    </div>
-                                    Invalid Request.
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">
-                                                  <i class="now-ui-icons ui-1_simple-remove"></i>
-                                                </span>
-                                              </button>
-                                </div>
+                                <h3 style="color: #ffffff;">OTP CODE GENERATOR</h3>
                             </div>
                             <div class="alert alert-danger" role="alert" ng-show="IsVisible_ider">
                                 <div class="container">
                                     <div class="alert-icon">
                                         <i class="now-ui-icons ui-1_bell-53"></i>
                                     </div>
-                                    ID Number / Code Incorrect.
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">
-                                                      <i class="now-ui-icons ui-1_simple-remove"></i>
-                                                    </span>
-                                                  </button>
+                                    ID Number Incorrect.
                                 </div>
                             </div>
                             <div class="alert alert-warning" role="alert" ng-show="IsVisible_voted">
@@ -60,25 +42,7 @@
                                     <div class="alert-icon">
                                         <i class="now-ui-icons ui-1_bell-53"></i>
                                     </div>
-                                    You Already Voted.
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">
-                                                          <i class="now-ui-icons ui-1_simple-remove"></i>
-                                                        </span>
-                                                      </button>
-                                </div>
-                            </div>
-                            <div class="alert alert-success" role="alert" ng-show="IsVisible_voted_success">
-                                <div class="container">
-                                    <div class="alert-icon">
-                                        <i class="now-ui-icons ui-1_bell-53"></i>
-                                    </div>
-                                    Successfully Voted.
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">
-                                                              <i class="now-ui-icons ui-1_simple-remove"></i>
-                                                            </span>
-                                                          </button>
+                                    Already Voted.
                                 </div>
                             </div>
                             <div class="card-body">
@@ -97,13 +61,13 @@
                                                             <i class="now-ui-icons ui-1_lock-circle-open"></i>
                                                           </span>
                                     </div>
-                                    <input type="password" id="code" class="form-control-lg form-control" placeholder="Enter Code" ng-model="pass" required>
+                                    <input type="text" id="code" class="form-control-lg form-control" placeholder="Enter Code" ng-model="pass" readonly>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div>
                                     <button type="submit" class="btn btn-primary btn-round btn-lg btn-block"> 
-                                        <span ng-show="voteButtonLoading"><i class="now-ui-icons loader_refresh spin"></i></span>
-                                        {{ voteButtonText }}
+                                        <span ng-show="generateButtonLoading"><i class="now-ui-icons loader_refresh spin"></i></span>
+                                        {{ generateButtonText }}
                                     </button>
                                     <p>{{count}}</p>
                                 </div>
