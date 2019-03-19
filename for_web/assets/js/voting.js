@@ -4,6 +4,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
     $scope.votingButtonText = "Cast Ballot";
 
     $scope.id = sessionStorage.getItem('id');
+    $scope.otp = sessionStorage.getItem('otp');
     $scope.name = sessionStorage.getItem('name');
     $scope.url = "http://192.168.1.173:8080"
 
@@ -148,9 +149,10 @@ app.controller('myCtrl', function($scope, $http, $window) {
 
         $http({
             method: 'POST',
-            url: 'http://192.168.1.173:8080/vote/voterequest',
+            url: $scope.url + '/vote/voterequest',
             data: {
-                "id": $scope.id
+                "id": $scope.id,
+                "otp": $scope.otp
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -169,7 +171,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
                     //alert("You can vote");
                     $http({
                         method: 'POST',
-                        url: 'http://192.168.1.173:8080/vote/castballot',
+                        url: $scope.url + '/vote/castballot',
                         data: {
                             "voter": $scope.id,
                             "pres": $scope.presidentSel,

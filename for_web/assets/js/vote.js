@@ -1,8 +1,11 @@
 angular.module('vote', [])
     .controller('myCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
         //$scope.count = 0;
+        $scope.url = "http://192.168.1.173:8080"
+
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('id');
+        sessionStorage.removeItem('otp');
         sessionStorage.removeItem('course');
 
         $scope.voteButtonText = "Vote";
@@ -17,8 +20,9 @@ angular.module('vote', [])
 
         if (sessionStorage.getItem('success') == 1) {
             $scope.IsVisible_voted_success = true;
+        } else if (sessionStorage.getItem('error') == 2) {
+            $scope.IsVisible_ir = true;
         }
-
         // } else if (sessionStorage.getItem('error') == 3) {
         //     $scope.IsVisible_voted = true;
         //     //sessionStorage.removeItem('error');
@@ -34,7 +38,7 @@ angular.module('vote', [])
 
         $scope.myFunc = function() {
             var id = $scope.id;
-            var pass = $scope.pass;
+            var otp = $scope.otp;
 
             $scope.voteButtonLoading = true;
             $scope.voteButtonText = "";
@@ -49,15 +53,16 @@ angular.module('vote', [])
 
             $http({
                 method: 'POST',
-                url: 'http://192.168.1.173:8080/vote/voterequest',
+                url: $scope.url + '/vote/voterequest',
                 data: {
-                    "id": id
+                    "id": id,
+                    "otp": otp
                 },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then(function(response) {
-                //console.log(response);
+                console.log(response);
                 $scope.res = response;
                 var exist = $scope.res.data.exist;
                 var voted = $scope.res.data.voted;
@@ -74,6 +79,7 @@ angular.module('vote', [])
                         //alert("You can vote");
                         sessionStorage.setItem('name', name);
                         sessionStorage.setItem('id', id);
+                        sessionStorage.setItem('otp', otp);
                         sessionStorage.setItem('course', course);
                         sessionStorage.removeItem('success');
                         $window.location.href = '../voting';

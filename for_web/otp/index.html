@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSG 2k19 Election</title>
+    <title>OTP Code Generator</title>
 
     <script src="../assets/js/angular/angular.min.js"></script>
     <script src="../assets/js/core/jquery.min.js"></script>
@@ -27,7 +27,7 @@
                     <div class="card card-login card-plain" ng-app="comselect" ng-controller="myCtrl">
                         <form class="form" ng-submit="myFunc();">
                             <div class="card-header text-center">
-                                <h3 style="color: #ffffff;">OTP CODE GENERATOR</h3>
+                                <h3 style="color: #ffffff;">OTP GENERATOR</h3>
                             </div>
                             <div class="alert alert-danger" role="alert" ng-show="IsVisible_ider">
                                 <div class="container">
@@ -45,11 +45,19 @@
                                     Already Voted.
                                 </div>
                             </div>
+                            <div class="alert alert-info" role="alert" ng-show="IsVisible_votername">
+                                <div class="container">
+                                    <div class="alert-icon">
+                                        <i class="now-ui-icons travel_info"></i>
+                                    </div>
+                                    Name: {{voter_name}} <br> Course: {{voter_course}}
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="input-group no-border input-lg">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                                            <i class="now-ui-icons users_circle-08"></i>
+                                                            <i class="now-ui-icons users_single-02"></i>
                                                           </span>
                                     </div>
                                     <input type="text" id="idnumber" class="form-control-lg form-control" placeholder="Enter ID Number" ng-model="id" required>
@@ -58,10 +66,10 @@
                                 <div class="input-group no-border input-lg">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                                            <i class="now-ui-icons ui-1_lock-circle-open"></i>
+                                                            <i class="now-ui-icons objects_key-25"></i>
                                                           </span>
                                     </div>
-                                    <input type="text" id="code" class="form-control-lg form-control" placeholder="Enter Code" ng-model="pass" readonly>
+                                    <input type="text" id="code" class="form-control-lg form-control" placeholder="GET CODE HERE" ng-model="pass" readonly>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div>
@@ -86,6 +94,23 @@
         $('#idnumber').keyup(function() {
             $(this).val($(this).val().toUpperCase());
         });
+    });
+</script>
+
+<script>
+    document.addEventListener("keydown", function(event) {
+        if (event.ctrlKey && event.altKey && event.key === "o") {
+            //alert("Redirecting");
+            window.open("../otp");
+        }
+        if (event.ctrlKey && event.altKey && event.key === "r") {
+            //alert("Redirecting");
+            window.open("../result");
+        }
+        if (event.ctrlKey && event.altKey && event.key === "v") {
+            //alert("Redirecting");
+            window.open("../vote");
+        }
     });
 </script>
 

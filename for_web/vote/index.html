@@ -23,7 +23,7 @@
     <div class="page-header clear-filter">
         <div class="content">
             <div class="container">
-                <div class="col-sm-4 ml-auto mr-auto">
+                <div class="col-sm-6 ml-auto mr-auto">
                     <div class="card card-login card-plain" ng-app="vote" ng-controller="myCtrl">
                         <form class="form" ng-submit="myFunc();">
                             <div class="card-header text-center">
@@ -65,7 +65,7 @@
                                 <div class="input-group no-border input-lg">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                                            <i class="now-ui-icons users_circle-08"></i>
+                                                            <i class="now-ui-icons users_single-02"></i>
                                                           </span>
                                     </div>
                                     <input type="text" id="idnumber" class="form-control-lg form-control" placeholder="Enter ID Number" ng-model="id" required>
@@ -77,7 +77,7 @@
                                                             <i class="now-ui-icons ui-1_lock-circle-open"></i>
                                                           </span>
                                     </div>
-                                    <input type="password" id="code" class="form-control-lg form-control" placeholder="Enter Code" ng-model="pass" required>
+                                    <input type="password" id="code" class="form-control-lg form-control" placeholder="Enter OTP" ng-model="otp" required>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div>
@@ -102,6 +102,23 @@
         $('#idnumber').keyup(function() {
             $(this).val($(this).val().toUpperCase());
         });
+    });
+</script>
+
+<script>
+    document.addEventListener("keydown", function(event) {
+        if (event.ctrlKey && event.altKey && event.key === "o") {
+            //alert("Redirecting");
+            window.open("../otp");
+        }
+        if (event.ctrlKey && event.altKey && event.key === "r") {
+            //alert("Redirecting");
+            window.open("../result");
+        }
+        if (event.ctrlKey && event.altKey && event.key === "v") {
+            //alert("Redirecting");
+            window.open("../vote");
+        }
     });
 </script>
 
