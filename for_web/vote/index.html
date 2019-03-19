@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSG 2k19 Election</title>
 
     <script src="../assets/js/angular/angular.min.js"></script>
@@ -22,7 +23,7 @@
     <div class="page-header clear-filter">
         <div class="content">
             <div class="container">
-                <div class="col-md-4 ml-auto mr-auto">
+                <div class="col-sm-4 ml-auto mr-auto">
                     <div class="card card-login card-plain" ng-app="vote" ng-controller="myCtrl">
                         <form class="form" ng-submit="myFunc();">
                             <div class="card-header text-center">
@@ -46,7 +47,7 @@
                                     <div class="alert-icon">
                                         <i class="now-ui-icons ui-1_bell-53"></i>
                                     </div>
-                                    ID Number NOT Found.
+                                    ID Number / Code Incorrect.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">
                                                       <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -88,6 +89,15 @@
                                                           </span>
                                     </div>
                                     <input type="text" id="idnumber" class="form-control-lg form-control" placeholder="Enter ID Number" ng-model="id" required>
+                                    <div class="input-group-append"></div>
+                                </div>
+                                <div class="input-group no-border input-lg">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                                            <i class="now-ui-icons ui-1_lock-circle-open"></i>
+                                                          </span>
+                                    </div>
+                                    <input type="password" id="code" class="form-control-lg form-control" placeholder="Enter Code" ng-model="pass" required>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div>

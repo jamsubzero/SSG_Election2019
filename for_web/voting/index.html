@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSG 2k19 Election</title>
 
     <script src="../assets/js/angular/angular.min.js"></script>
@@ -16,6 +17,14 @@
     <link href="../assets/css/mystyle.css" rel="stylesheet" />
 
 </head>
+
+<style>
+    #cname {
+        color: #000000;
+        padding-left: inherit;
+        font-size: initial;
+    }
+</style>
 
 </script>
 
@@ -35,7 +44,6 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th></th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>
@@ -43,12 +51,11 @@
                                     <tr ng-repeat="p in pres">
                                         <td class="text-center" id="td1px">{{$index + 1}}</td>
                                         <td>
-                                            <label class="text-center containerc">
+                                            <label class="text-center containerc"><span id="cname">{{p.name}}</span>
                                                             <input type="checkbox" name="president" ng-model="p.checked" ng-click="checkP(p,$index)" ng-disabled="!p.checked && checkedNumberP === limitNumberP" ng-value="{{p.id}}">
-                                                           <span class="checkmarkc">
+                                                            <span class="checkmarkc"></span>
                                                           </label>
                                         </td>
-                                        <td>{{p.name}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -62,7 +69,6 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th></th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>
@@ -70,12 +76,11 @@
                                     <tr ng-repeat="vp in vpres">
                                         <td class="text-center" id="td1px">{{$index + 1}}</td>
                                         <td>
-                                            <label class="text-center containerc">
+                                            <label class="text-center containerc"><span id="cname">{{vp.name}}</span>
                                                                 <input type="checkbox" name="vicepresident" ng-model="vp.checked" ng-click="checkVP(vp,$index)" ng-disabled="!vp.checked && checkedNumberVP === limitNumberVP" ng-value="{{vp.id}}">
                                                                 <span class="checkmarkc"></span>
                                                               </label>
                                         </td>
-                                        <td>{{vp.name}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -89,7 +94,6 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th></th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>
@@ -97,13 +101,12 @@
                                     <tr ng-repeat="s in sen">
                                         <td class="text-center" id="td1px">{{$index + 1}}</td>
                                         <td>
-                                            <label class="text-center containerc">
+                                            <label class="text-center containerc"><span id="cname">{{s.name}}</span>
                                                                         <input type="checkbox" name="senators" ng-model="s.checked" ng-click="checkSEN(s,$index)" ng-disabled="!s.checked && checkedNumberSEN === limitNumberSEN" ng-value="{{s.id}}">
                                                                         <span class="checkmarkc"></span>
                                                                       </label>
 
                                         </td>
-                                        <td>{{s.name}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -117,7 +120,6 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th></th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>
@@ -125,21 +127,22 @@
                                     <tr ng-repeat="r in rep">
                                         <td class="text-center" id="td1px">{{$index + 1}}</td>
                                         <td>
-                                            <label class="text-center containerc">
+                                            <label class="text-center containerc"><span id="cname">{{r.name}}</span>
                                                                             <input type="checkbox" name="representatives" ng-model="r.checked" ng-click="checkREP(r,$index)" ng-disabled="!r.checked && checkedNumberREP === limitNumberREP" ng-value="{{r.id}}">
                                                                             <span class="checkmarkc"></span>
                                                                           </label>
 
                                         </td>
-                                        <td>{{r.name}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
-                    <div class="card-body text-center">
-                        <input type="submit" class="btn btn-primary btn-lg" value="Cast Ballot">
+                    <div class="card-body text-center col-md-4 ml-auto mr-auto">
+                        <button type="submit" class="btn btn-primary btn-round btn-lg btn-block"> 
+                            <span ng-show="votingButtonLoading"><i class="now-ui-icons loader_refresh spin"></i></span>
+                            {{ votingButtonText }}
+                        </button>
                     </div>
                 </div>
             </form>

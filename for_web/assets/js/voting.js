@@ -1,5 +1,8 @@
 var app = angular.module('voting', []);
 app.controller('myCtrl', function($scope, $http, $window) {
+
+    $scope.votingButtonText = "Cast Ballot";
+
     $scope.id = sessionStorage.getItem('id');
     $scope.name = sessionStorage.getItem('name');
     $scope.url = "http://192.168.1.173:8080"
@@ -139,6 +142,10 @@ app.controller('myCtrl', function($scope, $http, $window) {
         $scope.saveVPres();
         $scope.saveSen();
         $scope.saveRep();
+
+        $scope.votingButtonLoading = true;
+        $scope.votingButtonText = " Casting Ballot";
+
         $http({
             method: 'POST',
             url: 'http://192.168.1.173:8080/vote/voterequest',
@@ -178,9 +185,14 @@ app.controller('myCtrl', function($scope, $http, $window) {
                         if ($scope.res2.data.result == "Success") {
                             sessionStorage.setItem('success', 1);
                             $window.location.href = '../vote';
+                        } else {
+                            alert("Something Wrong. Please Contact Administrator")
                         }
                         //console.log($scope.res2);
                     }, function(error) {
+                        alert("Failed Casting Ballot, Please Try Again")
+                        $scope.votingButtonLoading = false;
+                        $scope.votingButtonText = "Cast Ballot";
                         console.log(error);
                     });
 

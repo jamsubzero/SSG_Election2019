@@ -6,7 +6,6 @@ angular.module('vote', [])
         sessionStorage.removeItem('course');
 
         $scope.voteButtonText = "Vote";
-        $scope.test = "false";
 
         // sessionStorage.removeItem('success');
         // sessionStorage.removeItem('error');
@@ -35,8 +34,8 @@ angular.module('vote', [])
 
         $scope.myFunc = function() {
             var id = $scope.id;
+            var pass = $scope.pass;
 
-            $scope.test = "true";
             $scope.voteButtonLoading = true;
             $scope.voteButtonText = "";
 
@@ -81,6 +80,8 @@ angular.module('vote', [])
                     } else {
                         //alert("You already VOTED!");
                         $scope.IsVisible_voted = true;
+                        $scope.voteButtonLoading = false;
+                        $scope.voteButtonText = "Vote";
                     }
                 }
             }, function(error) {
