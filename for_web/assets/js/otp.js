@@ -1,4 +1,4 @@
-angular.module('comselect', [])
+angular.module('otp', [])
     .controller('myCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
 
         $scope.url = "http://192.168.1.173:8080"
