@@ -8,6 +8,7 @@
     <script src="../../assets/js/core/jquery.min.js"></script>
     <script src="../../assets/js/core/popper.min.js"></script>
     <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../assets/js/plugins/bootstrap-notify.js"></script>
     <script src="../../assets/js/adminadmin.js"></script>
 
     <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -22,12 +23,96 @@
         <h3>Administrator</h3>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
+        <div class="alert alert-success" role="alert" ng-show="addCandidateNotify">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="now-ui-icons ui-2_like"></i>
+                </div>
+                <strong>Success!</strong> You successfully added a candidate.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">
+                          <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </span>
+                      </button>
+            </div>
+        </div>
+        <div class="alert alert-danger" role="alert" ng-show="errorCandidateNotify">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="now-ui-icons ui-1_bell-53"></i>
+                </div>
+                <strong>Error!</strong> Cannot add candidate.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                                </span>
+                              </button>
+            </div>
+        </div>
+        <div class="alert alert-info" role="alert" ng-show="deleteCandidateNotify">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="now-ui-icons ui-1_bell-53"></i>
+                </div>
+                <strong>Success!</strong> You deleted a candidate.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                                </span>
+                              </button>
+            </div>
+        </div>
+        <div class="alert alert-warning" role="alert" ng-show="cannotdeleteCandidateNotify">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="now-ui-icons ui-1_bell-53"></i>
+                </div>
+                <strong>Warning!</strong> Cannot delete candidate.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                              <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </span>
+                          </button>
+            </div>
+        </div>
+
+        <div class="alert alert-primary" role="alert" ng-show="reZeroNotify">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="now-ui-icons ui-1_bell-53"></i>
+                </div>
+                <strong>REZERO SUCCES!</strong> All voting data are SET to 0.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                                </span>
+                              </button>
+            </div>
+        </div>
+
         <div class="content nav">
-            <button class="btn-lg btn-primary btn-round" type="button" data-toggle="modal" data-target="#AddModal">
+            <div class="col-md-4" id="center">
+                <button class="btn-lg btn-primary btn-round" type="button" data-toggle="modal" data-target="#AddModal">
                     <i class="now-ui-icons ui-1_simple-add"></i> Add Candidate
                 </button>
+            </div>
+            <div class="col-md-4" id="center">
+                <h3 id="center">Voting</h3>
+                <label class="switch">
+                                    <input type="checkbox" id="votingCheckBox" data-toggle="modal" ng-model="votingStat">
+                                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-md-4" id="center">
+                <button class="btn-lg btn-danger btn-round" type="button" data-toggle="modal" data-target="#reZeroModal">
+                            <i class="now-ui-icons ui-1_simple-add"></i> ReZero
+                        </button>
+            </div>
         </div>
+
+
+
         <div class="row">
             <div class="card" id="cardmargin">
                 <div class="card-body">
@@ -70,7 +155,7 @@
 <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form ng-submit="insertCandidate()">
+            <form class="form" ng-submit="insertCandidate();">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add Candidate</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -81,35 +166,36 @@
                     <div class="form-row">
                         <div class="form-group col-md">
                             <label>Full Name</label>
-                            <input class="form-control form-control-lg" type="text" placeholder="Last Name, Fisrt Name, Middle Name" ng-model="candidatename">
+                            <input class="form-control form-control-lg" type="text" placeholder="Last Name, First Name, Middle Name" ng-model="candidatename" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md">
                             <label>Position</label>
-                            <select class="form-control form-control-lg" ng-model="candidateposition">
-                                    <option>President</option>
-                                    <option>Vice President</option>
-                                    <option>Senator</option>
-                                    <option>Education Representative</option>
-                                    <option>Fisheries Representative</option>
-                                    <option>Information Technology Representative</option>
-                                    <option>Business Administration Representative</option>
-                                    <option>Criminology Representative</option>
+                            <select class="form-control form-control-lg" ng-model="candidateposition" required>
+                                    <option value="">Please Select...</option>
+                                    <option value="pres">President</option>
+                                    <option value="vp">Vice President</option>
+                                    <option value="sen">Senator</option>
+                                    <option value="edrep">Education Representative</option>
+                                    <option value="firep">Fisheries Representative</option>
+                                    <option value="itrep">Information Technology Representative</option>
+                                    <option value="barep">Business Administration Representative</option>
+                                    <option value="crrep">Criminology Representative</option>
                                   </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<div id="deleteModal" class="modal fade modal-mini modal-danger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+<div id="deleteModal" class="modal fade modal-mini modal-warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
@@ -117,7 +203,7 @@
                     <i class="now-ui-icons users_circle-08"></i>
                 </div>
             </div>
-            <form>
+            <form class="form" ng-submit="confirmDelete();">
                 <div class="modal-body">
 
                     <div class="form-group row">
@@ -127,13 +213,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Verify Password" name="password">
-                        </div>
-                        <div class="col-sm-12">
-                            <input type="hidden" class="form-control" id="idno" name="idno">
-                        </div>
-                        <div class="col-sm-12">
-                            <input type="hidden" class="form-control" id="" name="" value="">
+                            <input type="password" class="form-control" id="inputPassword1" placeholder="Verify Password" name="password" ng-model="deletepassword" required>
                         </div>
                     </div>
 
@@ -147,5 +227,89 @@
         </div>
     </div>
 </div>
+
+<div id="votingModal" class="modal fade modal-mini modal-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <div class="modal-profile">
+                    <i class="now-ui-icons users_circle-08"></i>
+                </div>
+            </div>
+            <form class="form" ng-submit="setVoting();">
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-center">
+                            <h4>{{VotingModalMessage}}</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="inputPassword2" placeholder="Verify Password" name="password" ng-model="votingpassword" required>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-link btn-neutral">Proceed</button>
+                    <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="reZeroModal" class="modal fade modal-mini modal-warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <div class="modal-profile">
+                    <i class="now-ui-icons users_circle-08"></i>
+                </div>
+            </div>
+            <form class="form" ng-submit="reZero();">
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-center">
+                            <h4>REZERO WILL REMOVE ALL VOTE LOGS</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="Verify Password" name="password" ng-model="rezeropassword" required>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-link btn-neutral">Proceed</button>
+                    <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.modal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+    });
+</script>
+
+<script>
+    $("#votingCheckBox").click(function() {
+        if ($("#votingCheckBox").prop("checked") == true) {
+            $('#votingModal').modal('show');
+            $("#votingCheckBox").prop("checked", false);
+        } else if ($("#votingCheckBox").prop("checked") == false) {
+            $('#votingModal').modal('show');
+            $("#votingCheckBox").prop("checked", true);
+        }
+    });
+</script>
 
 </html>

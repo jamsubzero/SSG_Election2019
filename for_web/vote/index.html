@@ -27,7 +27,7 @@
                     <div class="card card-login card-plain" ng-app="vote" ng-controller="myCtrl">
                         <form class="form" ng-submit="myFunc();">
                             <div class="card-header text-center">
-                                <h3 style="color: #ffffff;">SSG Election 2019</h3>
+                                <h3 style="color: #ffffff; text-align: center;">SSG Election 2019</h3>
                             </div>
                             <div class="alert alert-warning" role="alert" ng-show="IsVisible_ir">
                                 <div class="container">
@@ -51,6 +51,14 @@
                                         <i class="now-ui-icons ui-1_bell-53"></i>
                                     </div>
                                     You Already Voted.
+                                </div>
+                            </div>
+                            <div class="alert alert-warning" role="alert" ng-show="IsVisible_voting">
+                                <div class="container">
+                                    <div class="alert-icon">
+                                        <i class="now-ui-icons ui-1_bell-53"></i>
+                                    </div>
+                                    Voting Closed.
                                 </div>
                             </div>
                             <div class="alert alert-success" role="alert" ng-show="IsVisible_voted_success">

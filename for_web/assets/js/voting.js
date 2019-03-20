@@ -6,7 +6,7 @@ app.controller('myCtrl', function($scope, $http, $window) {
     $scope.id = sessionStorage.getItem('id');
     $scope.otp = sessionStorage.getItem('otp');
     $scope.name = sessionStorage.getItem('name');
-    $scope.url = "http://192.168.1.173:8080"
+    $scope.url = "http://192.168.1.213:8080"
 
     if (sessionStorage.getItem('name') == null) {
         sessionStorage.setItem('error', 2);
@@ -138,74 +138,87 @@ app.controller('myCtrl', function($scope, $http, $window) {
     }
 
 
+
     $scope.castBallot = function() {
-        $scope.savePres();
-        $scope.saveVPres();
-        $scope.saveSen();
-        $scope.saveRep();
+        $http.get($scope.url + '/config/getstat').
+        then(function(response) {
+            $scope.stat = response.data;
 
-        $scope.votingButtonLoading = true;
-        $scope.votingButtonText = " Casting Ballot";
+            if ($scope.stat.votingStatus != 0) {
 
-        $http({
-            method: 'POST',
-            url: $scope.url + '/vote/voterequest',
-            data: {
-                "id": $scope.id,
-                "otp": $scope.otp
-            },
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(function(response) {
-            //console.log(response);
-            $scope.res = response;
-            var exist = $scope.res.data.exist;
-            var voted = $scope.res.data.voted;
-            if (exist == 0) {
-                //alert("Not Existing");
+                $scope.savePres();
+                $scope.saveVPres();
+                $scope.saveSen();
+                $scope.saveRep();
+
+                $scope.votingButtonLoading = true;
+                $scope.votingButtonText = " Casting Ballot";
+
+                $http({
+                    method: 'POST',
+                    url: $scope.url + '/vote/voterequest',
+                    data: {
+                        "id": $scope.id,
+                        "otp": $scope.otp
+                    },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(response) {
+                    //console.log(response);
+                    $scope.res = response;
+                    var exist = $scope.res.data.exist;
+                    var voted = $scope.res.data.voted;
+                    if (exist == 0) {
+                        //alert("Not Existing");
+                        sessionStorage.setItem('error', 2);
+                        $window.location.href = '../vote';
+                    } else {
+                        if (voted == 0) {
+                            //alert("You can vote");
+                            $http({
+                                method: 'POST',
+                                url: $scope.url + '/vote/castballot',
+                                data: {
+                                    "voter": $scope.id,
+                                    "pres": $scope.presidentSel,
+                                    "vp": $scope.VicePresidentSel,
+                                    "sen": $scope.senatorArray,
+                                    "rep": $scope.RepresentativeArray
+                                },
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(function(response2) {
+                                $scope.res2 = response2;
+                                if ($scope.res2.data.result == "Success") {
+                                    sessionStorage.setItem('success', 1);
+                                    $window.location.href = '../vote';
+                                } else {
+                                    alert("Something Wrong. Please Contact Administrator")
+                                }
+                                //console.log($scope.res2);
+                            }, function(error) {
+                                alert("Failed Casting Ballot, Please Try Again")
+                                $scope.votingButtonLoading = false;
+                                $scope.votingButtonText = "Cast Ballot";
+                                console.log(error);
+                            });
+
+                        } else {
+                            //alert("You already VOTED!");
+                            sessionStorage.setItem('error', 3);
+                            $window.location.href = '../vote';
+                        }
+                    }
+                }, function(error) {
+                    console.log(error);
+                });
+            } else {
                 sessionStorage.setItem('error', 2);
                 $window.location.href = '../vote';
-            } else {
-                if (voted == 0) {
-                    //alert("You can vote");
-                    $http({
-                        method: 'POST',
-                        url: $scope.url + '/vote/castballot',
-                        data: {
-                            "voter": $scope.id,
-                            "pres": $scope.presidentSel,
-                            "vp": $scope.VicePresidentSel,
-                            "sen": $scope.senatorArray,
-                            "rep": $scope.RepresentativeArray
-                        },
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(function(response2) {
-                        $scope.res2 = response2;
-                        if ($scope.res2.data.result == "Success") {
-                            sessionStorage.setItem('success', 1);
-                            $window.location.href = '../vote';
-                        } else {
-                            alert("Something Wrong. Please Contact Administrator")
-                        }
-                        //console.log($scope.res2);
-                    }, function(error) {
-                        alert("Failed Casting Ballot, Please Try Again")
-                        $scope.votingButtonLoading = false;
-                        $scope.votingButtonText = "Cast Ballot";
-                        console.log(error);
-                    });
-
-                } else {
-                    //alert("You already VOTED!");
-                    sessionStorage.setItem('error', 3);
-                    $window.location.href = '../vote';
-                }
             }
-        }, function(error) {
-            console.log(error);
         });
     }
+
 });
