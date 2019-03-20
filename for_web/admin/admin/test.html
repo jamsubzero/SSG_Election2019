@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Admin - Home</title>
+
+    <script src="../../assets/js/angular/angular.min.js"></script>
+    <script src="../../assets/js/core/jquery.min.js"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../assets/js/adminadmin.js"></script>
+
+    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+    <link href="../../assets/css/now-ui-dashboard.css" rel="stylesheet" />
+    <link href="../../assets/css/mystyle.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody ng-app="admina" ng-controller="myCtrl">
+                <tr ng-repeat="c in candidates">
+                    <td class="text-center" id="td1px">{{$index + 1}}</td>
+                    <td>
+                        {{c.name}}
+                    </td>
+                    <td>
+                        {{c.position}}
+                    </td>
+                    <td>
+                        <input type="hidden" name="id" ng-model="id">
+                        <button type="button" onclick="getRowID(1)" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon" data-toggle="modal" title="Delete" data-target="#deleteModal" data-dismiss="modal">
+                                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                                    </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>

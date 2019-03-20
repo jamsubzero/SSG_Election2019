@@ -1,0 +1,151 @@
+<!doctype html>
+<html ng-app="admina" ng-controller="myCtrl">
+
+<head>
+    <title>Admin - Home</title>
+
+    <script src="../../assets/js/angular/angular.min.js"></script>
+    <script src="../../assets/js/core/jquery.min.js"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../assets/js/adminadmin.js"></script>
+
+    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+    <link href="../../assets/css/now-ui-dashboard.css" rel="stylesheet" />
+    <link href="../../assets/css/mystyle.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div id="admintitle">
+        <h3>Administrator</h3>
+    </div>
+
+    <div class="container-fluid">
+        <div class="content nav">
+            <button class="btn-lg btn-primary btn-round" type="button" data-toggle="modal" data-target="#AddModal">
+                    <i class="now-ui-icons ui-1_simple-add"></i> Add Candidate
+                </button>
+        </div>
+        <div class="row">
+            <div class="card" id="cardmargin">
+                <div class="card-body">
+                    <h4 class="card-title">Candidates</h4>
+                    <table class="table" id="myTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="c in candidates">
+                                <td class="text-center" id="td1px">{{$index + 1}}</td>
+                                <td>
+                                    {{c.name}}
+                                </td>
+                                <td>
+                                    {{c.position}}
+                                </td>
+                                <td>
+                                    <button type="button" ng-click="getRowID(c,$index)" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon" data-toggle="modal" title="Delete" data-target="#deleteModal" data-dismiss="modal">
+                                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                                            </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+<!-- Modal -->
+<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form ng-submit="insertCandidate()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Candidate</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md">
+                            <label>Full Name</label>
+                            <input class="form-control form-control-lg" type="text" placeholder="Last Name, Fisrt Name, Middle Name" ng-model="candidatename">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md">
+                            <label>Position</label>
+                            <select class="form-control form-control-lg" ng-model="candidateposition">
+                                    <option>President</option>
+                                    <option>Vice President</option>
+                                    <option>Senator</option>
+                                    <option>Education Representative</option>
+                                    <option>Fisheries Representative</option>
+                                    <option>Information Technology Representative</option>
+                                    <option>Business Administration Representative</option>
+                                    <option>Criminology Representative</option>
+                                  </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade modal-mini modal-danger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <div class="modal-profile">
+                    <i class="now-ui-icons users_circle-08"></i>
+                </div>
+            </div>
+            <form>
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-center">
+                            <h4>{{deleteModalMessage}}</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Verify Password" name="password">
+                        </div>
+                        <div class="col-sm-12">
+                            <input type="hidden" class="form-control" id="idno" name="idno">
+                        </div>
+                        <div class="col-sm-12">
+                            <input type="hidden" class="form-control" id="" name="" value="">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-link btn-neutral">Proceed</button>
+                    <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</html>

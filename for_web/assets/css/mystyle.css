@@ -40,10 +40,25 @@ body {
     background-color: #FF5722;
 }
 
+#admintitle {
+    padding: 10px;
+    background-color: #1976D2;
+}
+
 h1 {
     margin: auto;
     text-align: center;
     color: #FFFFFF;
+}
+
+h3 {
+    margin: auto;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+.nav {
+    padding-top: 20px;
 }
 
 .carousel .carousel-inner {
