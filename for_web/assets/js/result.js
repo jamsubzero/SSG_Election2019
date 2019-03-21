@@ -2,7 +2,9 @@ angular.module('voteresult', [])
     .controller('Result', function($scope, $http, $timeout, ) {
 
         $scope.i = 0;
-        $scope.url = "http://192.168.1.173:8080"
+        $scope.url = "http://192.168.1.173:8080";
+
+        $scope.overall = 123456;
 
         $scope.reload = function() {
             $http.get($scope.url + '/ssgapi/getresult/pres').
@@ -36,6 +38,30 @@ angular.module('voteresult', [])
             $http.get($scope.url + '/ssgapi/getresult/firep').
             then(function(response) {
                 $scope.firep = response.data;
+            });
+            $http.get($scope.url + '/vote/statistics/all').
+            then(function(response) {
+                $scope.all = response.data;
+            });
+            $http.get($scope.url + '/vote/statistics/BA').
+            then(function(response) {
+                $scope.ba = response.data;
+            });
+            $http.get($scope.url + '/vote/statistics/CRIM').
+            then(function(response) {
+                $scope.cr = response.data;
+            });
+            $http.get($scope.url + '/vote/statistics/ED').
+            then(function(response) {
+                $scope.ed = response.data;
+            });
+            $http.get($scope.url + '/vote/statistics/FI').
+            then(function(response) {
+                $scope.fi = response.data;
+            });
+            $http.get($scope.url + '/vote/statistics/IT').
+            then(function(response) {
+                $scope.it = response.data;
             });
 
             $timeout(function() {

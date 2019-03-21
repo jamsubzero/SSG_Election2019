@@ -43,7 +43,7 @@
                                                 <tr ng-repeat="p in pres" id="{{'row' + ($index+1)}}" class="pres">
                                                     <td class="text-center" id="td1px">{{$index + 1}}</td>
                                                     <td id="td1px">{{p.name}}</td>
-                                                    <td id="td1px">{{p.score}}</td>
+                                                    <td id="td1px">{{p.score | number}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -1,0 +1,252 @@
+<!doctype html>
+<html ng-app="voteresult" ng-controller="Result">
+
+<head>
+    <title>SSG 2k19 Election Results</title>
+
+    <script src="../assets/js/angular/angular.min.js"></script>
+    <script src="../assets/js/result.js"></script>
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+    <link href="../assets/css/now-ui-dashboard.css" rel="stylesheet" />
+
+    <style>
+        #tac {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrapper ">
+        <div class="container">
+            <div class="content">
+                <div class="col-md-12">
+                    <div class="card card-plain">
+                        <div class="card-header" id="tac">
+                            <h4 class="card-title"> SSG Election 2019
+                            </h4>
+                            <h5>Overall Result</h5>
+                        </div>
+                        <div class="card-body">
+                            <label>Total Registered Voters: {{all.population}} | Total Voted: {{all.voted}} ({{all.percentage}}%)</label><br><br>
+                            <label>Business Administration Voters: {{ba.population}} | Total Voted: {{ba.voted}} ({{ba.percentage}}%)</label><br>
+                            <label>Criminology Voters: {{cr.population}} | Total Voted: {{cr.voted}} ({{cr.percentage}}%)</label><br>
+                            <label>Education Voters: {{ed.population}} | Total Voted: {{ed.voted}} ({{ed.percentage}}%)</label><br>
+                            <label>Fisheries Voters: {{fi.population}} | Total Voted: {{fi.voted}} ({{fi.percentage}}%)</label><br>
+                            <label>Information Technology Voters: {{it.population}} | Total Voted: {{it.voted}} ({{it.percentage}}%)</label><br>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>President</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="p in pres">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{p.name}}</td>
+                                            <td id="tac">{{p.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>Vice President</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="vp in vpres">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{vp.name}}</td>
+                                            <td id="tac">{{vp.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>Senator</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="s in sen">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{s.name}}</td>
+                                            <td id="tac">{{s.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>Business Administration Representative</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ba in barep">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{ba.name}}</td>
+                                            <td id="tac">{{ba.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>Criminology Representative</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="cr in crrep">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{cr.name}}</td>
+                                            <td id="tac">{{cr.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>Education Representative</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ed in edrep">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{ed.name}}</td>
+                                            <td id="tac">{{ed.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>Fisheries Representative</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="fi in firep">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{fi.name}}</td>
+                                            <td id="tac">{{fi.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <h6>Information Technology Representative</h6>
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th id="tac">
+                                            Votes
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="it in itrep">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{it.name}}</td>
+                                            <td id="tac">{{it.score | number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
